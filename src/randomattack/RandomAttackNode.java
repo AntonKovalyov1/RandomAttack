@@ -2,6 +2,7 @@ package randomattack;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -137,7 +138,18 @@ public class RandomAttackNode implements Runnable {
             }
         }
         
-        L[id] = Collections.min(Arrays.asList(L[id])) + 1;
+        L[id] = getMin(L) + 1;
+    }
+    
+    private int getMin(int[] array) {
+        int size = array.length;
+        int min = array[0];
+        
+        for (int i = 1; i < size; i++) {
+            min = Math.min(min, array[i]);
+        }
+        
+        return min;
     }
     
     private void setRandomKey() {
