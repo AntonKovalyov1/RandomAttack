@@ -35,7 +35,9 @@ public class RandomAttackNode implements Runnable {
                         final int r, 
                         final int x, 
                         final int val,
-                        final Phaser phaser) {
+                        final Phaser phaser,
+                        final Channel[] receiveChannel,
+                        final Channel[] sendChannel) {
         this.id = id;
         this.n = n;
         this.r = r;
@@ -46,8 +48,10 @@ public class RandomAttackNode implements Runnable {
         V = new int[n];
         L = new int[n];
         
-        sendChannel = new Channel[n];
-        receiveChannel = new Channel[n];
+        this.receiveChannel = receiveChannel;
+        this.sendChannel = sendChannel;
+        
+        messageCounter = id * n;
         
         init(val);
     }
@@ -96,12 +100,14 @@ public class RandomAttackNode implements Runnable {
     private void broadcast() {
         Message msg = buildMessage();
         
-        messageCounter = currRound * n * (n - 1) + id * (n - 1) + 1;
+//        messageCounter = currRound * n * (n - 1) + id * (n - 1) + 1;
         for (int i = 0; i < n; i++) {
             if (i != id) {
                 
                 if (messageCounter != x) {
                     sendChannel[i].add(msg);
+                } else {
+                    System.out.println("lost!!!");
                 }
                 
                 messageCounter++;
