@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package randomattack;
 
 import java.util.concurrent.Phaser;
@@ -103,7 +98,7 @@ public class RandomAttack implements Runnable {
         
         for (int i = 0; i < n; i++) {
             RandomAttackNode curr = nodes[i];
-            System.out.println("Node " + (i + 1) + " :");
+            System.out.println("Node " + (i + 1) + ":");
             System.out.println("Key: " + curr.getKey());
             System.out.println("decision value : " + curr.getDecision());
             System.out.println("Level vector: ");

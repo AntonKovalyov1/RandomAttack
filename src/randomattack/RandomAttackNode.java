@@ -1,8 +1,5 @@
 package randomattack;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -52,8 +49,6 @@ public class RandomAttackNode implements Runnable {
         this.receiveChannel = receiveChannel;
         this.sendChannel = sendChannel;
         
-        messageCounter = id * n;
-        
         init(val);
     }
     
@@ -101,15 +96,14 @@ public class RandomAttackNode implements Runnable {
     private void broadcast() {
         Message msg = buildMessage();
         
-//        messageCounter = currRound * n * (n - 1) + id * (n - 1) + 1;
+        messageCounter = currRound * n * (n - 1) + id * (n - 1) + 1;
+        
         for (int i = 0; i < n; i++) {
             if (i != id) {
                 
-                if (messageCounter != x) {
+                if (messageCounter % x != 0) {
                     sendChannel[i].add(msg);
-                } else {
-                    System.out.println("lost!!!");
-                }
+                } 
                 
                 messageCounter++;
             }
